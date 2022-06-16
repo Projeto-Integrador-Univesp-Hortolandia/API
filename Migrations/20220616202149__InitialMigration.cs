@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API.Migrations
 {
-    public partial class initial : Migration
+    public partial class _InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -37,7 +37,8 @@ namespace API.Migrations
                     RG = table.Column<long>(type: "bigint", nullable: false),
                     Sexo = table.Column<string>(type: "nvarchar(1)", nullable: false),
                     Foto = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Observacao = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Observacao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -58,7 +59,8 @@ namespace API.Migrations
                     Senha = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Sexo = table.Column<string>(type: "nvarchar(1)", nullable: false),
                     Foto = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Turmas = table.Column<int>(type: "int", nullable: false)
+                    Turmas = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -87,14 +89,16 @@ namespace API.Migrations
                 name: "Turmas",
                 columns: table => new
                 {
-                    TurmaId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NomeTurma = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AlunoId = table.Column<int>(type: "int", nullable: false)
+                    turma = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Ano = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Periodo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Sala = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Turmas", x => x.TurmaId);
+                    table.PrimaryKey("PK_Turmas", x => x.Id);
                 });
         }
 

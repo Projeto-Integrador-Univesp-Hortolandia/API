@@ -8,7 +8,7 @@ namespace API.Repository
         Task<Turma> Get(int id);
         Task<Turma> Post(Turma turma);
         Task<Turma> Put(int id, Turma turma);
-        Task<Turma> Delete(int id);
+        Task<Turma> Delete(int id, int funcionarioId);
         
     }
 }

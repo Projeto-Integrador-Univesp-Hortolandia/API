@@ -11,7 +11,6 @@
         public string Senha { get; set; }
         public char Sexo { get; set; }
         public string Foto { get; set; }
-        public int Turmas { get; set; }
-        public char Status { get; set; }
+        public int Status { get; set; }
     }
 }

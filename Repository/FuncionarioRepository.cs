@@ -12,14 +12,15 @@ namespace API.Repository
             _context = context;
         }
         
-        public async Task<Funcionario> Delete(int id)
+        public async Task<Funcionario> Delete(int id, int AdministradorId)
         {
+            var func = await _context.Adminstradores.FindAsync(id);
             var user = await _context.Funcionarios.FindAsync(id);
-            if (user == null)
+            if (func.Status == 1)
             {
-                return null;
-            }
-            _context.Funcionarios.Remove(user);
+                _context.Funcionarios.Remove(user);
+                return user;
+            }            
             return user;
         }
 

@@ -8,7 +8,7 @@ namespace API.Repository
         Task<Funcionario> Get(int id);
         Task<Funcionario> Post(Funcionario funcionario);
         Task<Funcionario> Put(int id, Funcionario funcionario);
-        Task<Funcionario> Delete(int id);
+        Task<Funcionario> Delete(int id, int administradorId);
 
     }
 }

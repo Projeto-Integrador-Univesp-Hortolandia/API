@@ -7,6 +7,7 @@
         public string Ano { get; set; }
         public string Periodo { get; set; }
         public string Sala { get; set; }
+        public Funcionario FuncionarioId { get; set; }
 
     }
 }

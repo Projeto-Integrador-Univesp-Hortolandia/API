@@ -8,6 +8,7 @@
         public string Senha { get; set; }
         public Int64 CPF { get; set; }
         public DateTime DataNasc { get; set; }
+        public int Status { get; set; }
 
     }
 }

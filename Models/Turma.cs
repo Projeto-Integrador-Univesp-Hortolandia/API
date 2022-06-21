@@ -2,9 +2,12 @@
 {
     public class Turma
     {
-        public int TurmaId { get; set; }
-        public string NomeTurma { get; set; }
-        public int AlunoId { get; set; }
-        
+        public int Id { get; set; }
+        public string turma { get; set; }
+        public string Ano { get; set; }
+        public string Periodo { get; set; }
+        public string Sala { get; set; }
+        public Funcionario FuncionarioId { get; set; }
+
     }
 }

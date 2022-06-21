@@ -40,9 +40,9 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<Turma> Delete(int id)
+        public async Task<Turma> Delete(int id, int funcionarioId)
         {
-            return await _turmaRepository.Delete(id);
+            return await _turmaRepository.Delete(id, funcionarioId);
         }
 
     }

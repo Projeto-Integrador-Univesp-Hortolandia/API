@@ -15,5 +15,8 @@ namespace API.Context
         public DbSet<Administrador> Adminstradores { get; set; }
         public DbSet<Responsavel> Responsaveis { get; set; }
         public DbSet<Turma> Turmas { get; set; }
+        public DbSet<Feed> Feed { get; set; }
+        public DbSet<SuporteFeedFiles> SuporteFiles { get; set; }
+        public DbSet<Chat> Chat { get; set; }
     }
 }

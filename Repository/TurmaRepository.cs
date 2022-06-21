@@ -12,15 +12,16 @@ namespace API.Repository
         {
             _context = context;
         }
-        public async Task<Turma> Delete(int id)
+        public async Task<Turma> Delete(int id, int funcionarioId)
         {
-            var user = await _context.Turmas.FindAsync(id);
-            if (user != null)
-            {
-                _context.Turmas.Remove(user);
+            var user = await _context.Funcionarios.FindAsync(id);
+            var turma = await _context.Turmas.FindAsync(id);
+            if (user.Status == 1)            {
+                
+                _context.Turmas.Remove(turma);
                 await _context.SaveChangesAsync();
             }
-            return user;
+            return turma;
         }
 
         public async Task<IEnumerable<Turma>> Get()

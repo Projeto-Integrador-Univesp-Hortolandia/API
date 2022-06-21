@@ -42,9 +42,9 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<Funcionario> Delete(int id)
+        public async Task<Funcionario> Delete(int id, int administradorId)
         {
-            var deletedUser = await _funcionarioRepository.Delete(id);
+            var deletedUser = await _funcionarioRepository.Delete(id, administradorId);
             return deletedUser;
         }
 

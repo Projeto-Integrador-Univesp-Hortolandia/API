@@ -20,7 +20,12 @@ builder.Services.AddScoped<IResponsavel, ResposavelRepository>();
 builder.Services.AddScoped<IFuncionario, FuncionarioRepository>();
 builder.Services.AddScoped<ITurma, TurmaRepository>();
 
+#region [Cors]
+builder.Services.AddCors();
+#endregion
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -28,6 +33,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(c =>
+{
+    c.AllowAnyHeader();
+    c.AllowAnyMethod();
+    c.AllowAnyOrigin();
+});
 
 app.UseHttpsRedirection();
 

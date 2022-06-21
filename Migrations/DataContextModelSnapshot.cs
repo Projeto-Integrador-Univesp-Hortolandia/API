@@ -79,7 +79,7 @@ namespace API.Migrations
                     b.Property<long>("RG")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("ResponsavelId1")
+                    b.Property<int?>("ResponsavelId1")
                         .HasColumnType("int");
 
                     b.Property<string>("Sexo")
@@ -94,6 +94,40 @@ namespace API.Migrations
                     b.HasIndex("ResponsavelId1");
 
                     b.ToTable("Alunos");
+                });
+
+            modelBuilder.Entity("API.Models.Chat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("FuncionarioId1")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Mensagem")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ResponsavelId1")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Resposta")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FuncionarioId1");
+
+                    b.HasIndex("ResponsavelId1");
+
+                    b.ToTable("Chat");
                 });
 
             modelBuilder.Entity("API.Models.Feed", b =>
@@ -283,9 +317,26 @@ namespace API.Migrations
                 {
                     b.HasOne("API.Models.Responsavel", "ResponsavelId")
                         .WithMany()
+                        .HasForeignKey("ResponsavelId1");
+
+                    b.Navigation("ResponsavelId");
+                });
+
+            modelBuilder.Entity("API.Models.Chat", b =>
+                {
+                    b.HasOne("API.Models.Funcionario", "FuncionarioId")
+                        .WithMany()
+                        .HasForeignKey("FuncionarioId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Models.Responsavel", "ResponsavelId")
+                        .WithMany()
                         .HasForeignKey("ResponsavelId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("FuncionarioId");
 
                     b.Navigation("ResponsavelId");
                 });

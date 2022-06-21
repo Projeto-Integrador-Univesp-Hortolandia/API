@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API.Migrations
 {
-    public partial class _InitialMigration : Migration
+    public partial class _initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -121,7 +121,7 @@ namespace API.Migrations
                 {
                     AlunoId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ResponsavelId1 = table.Column<int>(type: "int", nullable: false),
+                    ResponsavelId1 = table.Column<int>(type: "int", nullable: true),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RG = table.Column<long>(type: "bigint", nullable: false),
                     Sexo = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -134,6 +134,34 @@ namespace API.Migrations
                     table.PrimaryKey("PK_Alunos", x => x.AlunoId);
                     table.ForeignKey(
                         name: "FK_Alunos_Responsaveis_ResponsavelId1",
+                        column: x => x.ResponsavelId1,
+                        principalTable: "Responsaveis",
+                        principalColumn: "ResponsavelId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Chat",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ResponsavelId1 = table.Column<int>(type: "int", nullable: false),
+                    Mensagem = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FuncionarioId1 = table.Column<int>(type: "int", nullable: false),
+                    Resposta = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Chat", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Chat_Funcionarios_FuncionarioId1",
+                        column: x => x.FuncionarioId1,
+                        principalTable: "Funcionarios",
+                        principalColumn: "FuncionarioId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Chat_Responsaveis_ResponsavelId1",
                         column: x => x.ResponsavelId1,
                         principalTable: "Responsaveis",
                         principalColumn: "ResponsavelId",
@@ -167,6 +195,16 @@ namespace API.Migrations
                 column: "ResponsavelId1");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Chat_FuncionarioId1",
+                table: "Chat",
+                column: "FuncionarioId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Chat_ResponsavelId1",
+                table: "Chat",
+                column: "ResponsavelId1");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Feed_FuncionarioId1",
                 table: "Feed",
                 column: "FuncionarioId1");
@@ -190,6 +228,9 @@ namespace API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Alunos");
+
+            migrationBuilder.DropTable(
+                name: "Chat");
 
             migrationBuilder.DropTable(
                 name: "SuporteFiles");

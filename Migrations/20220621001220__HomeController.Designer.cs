@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220620222213__correcaoTabela")]
-    partial class _correcaoTabela
+    [Migration("20220621001220__HomeController")]
+    partial class _HomeController
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -98,6 +98,49 @@ namespace API.Migrations
                     b.ToTable("Alunos");
                 });
 
+            modelBuilder.Entity("API.Models.Feed", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DataPublicacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FuncionarioId1")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Like")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TurmaIdId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Unlike")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FuncionarioId1");
+
+                    b.HasIndex("TurmaIdId");
+
+                    b.ToTable("Feed");
+                });
+
             modelBuilder.Entity("API.Models.Funcionario", b =>
                 {
                     b.Property<int>("FuncionarioId")
@@ -179,6 +222,33 @@ namespace API.Migrations
                     b.ToTable("Responsaveis");
                 });
 
+            modelBuilder.Entity("API.Models.SuporteFeedFiles", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("FeedId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LINKIMAGE")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("URLVIEO")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FeedId")
+                        .IsUnique();
+
+                    b.ToTable("SuporteFiles");
+                });
+
             modelBuilder.Entity("API.Models.Turma", b =>
                 {
                     b.Property<int>("Id")
@@ -224,6 +294,34 @@ namespace API.Migrations
                     b.Navigation("ResponsavelId");
                 });
 
+            modelBuilder.Entity("API.Models.Feed", b =>
+                {
+                    b.HasOne("API.Models.Funcionario", "FuncionarioId")
+                        .WithMany()
+                        .HasForeignKey("FuncionarioId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Models.Turma", "TurmaId")
+                        .WithMany()
+                        .HasForeignKey("TurmaIdId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FuncionarioId");
+
+                    b.Navigation("TurmaId");
+                });
+
+            modelBuilder.Entity("API.Models.SuporteFeedFiles", b =>
+                {
+                    b.HasOne("API.Models.Feed", null)
+                        .WithOne("SuporteFiles")
+                        .HasForeignKey("API.Models.SuporteFeedFiles", "FeedId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("API.Models.Turma", b =>
                 {
                     b.HasOne("API.Models.Funcionario", "FuncionarioId")
@@ -233,6 +331,12 @@ namespace API.Migrations
                         .IsRequired();
 
                     b.Navigation("FuncionarioId");
+                });
+
+            modelBuilder.Entity("API.Models.Feed", b =>
+                {
+                    b.Navigation("SuporteFiles")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

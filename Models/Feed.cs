@@ -3,7 +3,7 @@
     public class Feed
     {
         public int Id { get; set; }
-        public Turma TurmaId { get; set; }
+        public int TurmaId { get; set; }
         public Funcionario FuncionarioId { get; set; }
         public string Title { get; set; }
         public string Message { get; set; }

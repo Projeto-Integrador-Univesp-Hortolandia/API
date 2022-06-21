@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API.Migrations
 {
-    public partial class _HomeController : Migration
+    public partial class _InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,7 +39,7 @@ namespace API.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CPF = table.Column<long>(type: "bigint", nullable: false),
                     Senha = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Sexo = table.Column<string>(type: "nvarchar(1)", nullable: false),
+                    Sexo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Foto = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false)
                 },
@@ -64,6 +64,32 @@ namespace API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Responsaveis", x => x.ResponsavelId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Feed",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TurmaId = table.Column<int>(type: "int", nullable: false),
+                    FuncionarioId1 = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Like = table.Column<int>(type: "int", nullable: false),
+                    Unlike = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    DataPublicacao = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Feed", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Feed_Funcionarios_FuncionarioId1",
+                        column: x => x.FuncionarioId1,
+                        principalTable: "Funcionarios",
+                        principalColumn: "FuncionarioId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -115,38 +141,6 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Feed",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TurmaIdId = table.Column<int>(type: "int", nullable: false),
-                    FuncionarioId1 = table.Column<int>(type: "int", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Like = table.Column<int>(type: "int", nullable: false),
-                    Unlike = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    DataPublicacao = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Feed", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Feed_Funcionarios_FuncionarioId1",
-                        column: x => x.FuncionarioId1,
-                        principalTable: "Funcionarios",
-                        principalColumn: "FuncionarioId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Feed_Turmas_TurmaIdId",
-                        column: x => x.TurmaIdId,
-                        principalTable: "Turmas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "SuporteFiles",
                 columns: table => new
                 {
@@ -178,11 +172,6 @@ namespace API.Migrations
                 column: "FuncionarioId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Feed_TurmaIdId",
-                table: "Feed",
-                column: "TurmaIdId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_SuporteFiles_FeedId",
                 table: "SuporteFiles",
                 column: "FeedId",
@@ -206,13 +195,13 @@ namespace API.Migrations
                 name: "SuporteFiles");
 
             migrationBuilder.DropTable(
+                name: "Turmas");
+
+            migrationBuilder.DropTable(
                 name: "Responsaveis");
 
             migrationBuilder.DropTable(
                 name: "Feed");
-
-            migrationBuilder.DropTable(
-                name: "Turmas");
 
             migrationBuilder.DropTable(
                 name: "Funcionarios");

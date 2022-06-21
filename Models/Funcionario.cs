@@ -9,7 +9,7 @@
         public string Email { get; set; }
         public Int64 CPF { get; set; }
         public string Senha { get; set; }
-        public char Sexo { get; set; }
+        public string Sexo { get; set; }
         public string Foto { get; set; }
         public int Status { get; set; }
     }

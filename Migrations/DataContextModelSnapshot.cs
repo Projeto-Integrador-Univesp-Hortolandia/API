@@ -124,7 +124,7 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TurmaIdId")
+                    b.Property<int>("TurmaId")
                         .HasColumnType("int");
 
                     b.Property<int>("Unlike")
@@ -133,8 +133,6 @@ namespace API.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("FuncionarioId1");
-
-                    b.HasIndex("TurmaIdId");
 
                     b.ToTable("Feed");
                 });
@@ -171,7 +169,7 @@ namespace API.Migrations
 
                     b.Property<string>("Sexo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(1)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sobrenome")
                         .IsRequired()
@@ -300,15 +298,7 @@ namespace API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("API.Models.Turma", "TurmaId")
-                        .WithMany()
-                        .HasForeignKey("TurmaIdId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("FuncionarioId");
-
-                    b.Navigation("TurmaId");
                 });
 
             modelBuilder.Entity("API.Models.SuporteFeedFiles", b =>

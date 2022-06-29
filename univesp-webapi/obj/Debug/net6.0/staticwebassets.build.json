@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "JurFTFpnH+5dzCicly9xp0BCd24tjnyNE3M+TjzOLqM=",
+  "Source": "univesp-webapi",
+  "BasePath": "_content/univesp-webapi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

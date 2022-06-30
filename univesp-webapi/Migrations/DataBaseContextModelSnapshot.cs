@@ -176,6 +176,9 @@ namespace univesp_webapi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("DataNasc")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -187,6 +190,10 @@ namespace univesp_webapi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Registro")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("STATUS")
                         .HasColumnType("int");
 
@@ -194,8 +201,8 @@ namespace univesp_webapi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TurmaId")
-                        .HasColumnType("int");
+                    b.Property<long>("cpf")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 

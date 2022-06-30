@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using univesp_webapi.Data;
+using univesp_webapi.Data.DTO.Professores;
 using univesp_webapi.Models;
 
 namespace univesp_webapi.Controllers
@@ -15,10 +17,12 @@ namespace univesp_webapi.Controllers
     public class ProfessorsController : ControllerBase
     {
         private readonly DataBaseContext _context;
+        private readonly IMapper _mapper;
 
-        public ProfessorsController(DataBaseContext context)
+        public ProfessorsController(DataBaseContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Professors
@@ -34,21 +38,24 @@ namespace univesp_webapi.Controllers
 
         // GET: api/Professors/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Professor>> GetProfessor(int id)
+        public async Task<ActionResult<GetprofessoresDTO>> GetProfessor(int id)
         {
-          if (_context.Professores == null)
-          {
-              return NotFound();
-          }            
-            var professor = await _context.Professores.FindAsync(id);
-            var turma = await _context.Professores.FindAsync(professor.TurmaId);
-            
-            if (professor == null)
+            var turma = await _context.Turmas.Where(a => a.ProfessorId == id).ToListAsync();
+            var professor = await _context.Turmas.FindAsync(id);
+            var Professor = _mapper.Map(professor, new GetprofessoresDTO());
+            var resultProfessor = new GetprofessoresDTO
             {
-                return NotFound();
-            }
-            
-            return professor;
+                Nome = Professor.Nome,
+                cpf = Professor.cpf,
+                DataNasc = Professor.DataNasc,
+                Registro = Professor.Registro,
+                Email = Professor.Email,
+                Foto = Professor.Foto,
+                STATUS = Professor.STATUS,
+                Turmas = turma,
+            };
+
+            return resultProfessor;
         }
 
         // PUT: api/Professors/5
@@ -87,7 +94,7 @@ namespace univesp_webapi.Controllers
         [HttpPost]
         public async Task<ActionResult<Professor>> PostProfessor(Professor professor)
         {
-            var turma = await _context.Turmas.FindAsync(professor.TurmaId);
+            var turma = await _context.Turmas.FindAsync(professor.Id);
             if (_context.Professores == null)
           {
               return Problem("Entity set 'DataBaseContext.Professores'  is null.");

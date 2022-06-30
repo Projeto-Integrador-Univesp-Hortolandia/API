@@ -1,8 +1,9 @@
-﻿namespace univesp_webapi.Models
+﻿using univesp_webapi.Models;
+
+namespace univesp_webapi.Data.DTO.Turmas
 {
-    public class Turma
+    public class GetTurmaDTO
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
         public string? Ano { get; set; }
         public string? turma { get; set; }
@@ -10,5 +11,6 @@
         public string? Sala { get; set; }
         public int STATUS { get; set; }
         public int ProfessorId { get; set; }
+        public List<Aluno>? Alunos { get; set; }
     }
 }

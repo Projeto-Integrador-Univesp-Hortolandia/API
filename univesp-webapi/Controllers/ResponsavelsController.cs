@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using univesp_webapi.Data;
+using univesp_webapi.Data.DTO.Responsavel;
 using univesp_webapi.Models;
 
 namespace univesp_webapi.Controllers
@@ -15,10 +17,12 @@ namespace univesp_webapi.Controllers
     public class ResponsavelsController : ControllerBase
     {
         private readonly DataBaseContext _context;
+        private readonly IMapper _mapper;
 
-        public ResponsavelsController(DataBaseContext context)
+        public ResponsavelsController(DataBaseContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Responsavels
@@ -34,20 +38,22 @@ namespace univesp_webapi.Controllers
 
         // GET: api/Responsavels/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Responsavel>> GetResponsavel(int id)
+        public async Task<ActionResult<GetResponsavelDTO>> GetResponsavel(int id)
         {
-          if (_context.Responsavels == null)
-          {
-              return NotFound();
-          }
+            var alunos = await _context.Alunos.Where(a => a.ResponsavelId == id).ToListAsync();
             var responsavel = await _context.Responsavels.FindAsync(id);
-
-            if (responsavel == null)
+            var Responsavel = _mapper.Map(responsavel, new GetResponsavelDTO());
+            var resultResponsavel = new GetResponsavelDTO
             {
-                return NotFound();
-            }
+                Nome = Responsavel.Nome,
+                cpf = Responsavel.cpf,
+                DataNascimento = Responsavel.DataNascimento,
+                Observacao = responsavel.Observacao,
+                Foto = Responsavel.Foto,
+                Alunos = alunos
+            };
 
-            return responsavel;
+            return resultResponsavel;
         }
 
         // PUT: api/Responsavels/5

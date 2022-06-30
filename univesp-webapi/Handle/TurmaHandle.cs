@@ -12,11 +12,5 @@ namespace univesp_webapi.Handle
         public int STATUS { get; set; }
         public List<Aluno> Alunos { get; set; } = new List<Aluno>();
     }
-
-    public class TurmaHandleList
-    {
-        public List<TurmaHandle> Turmas { get; set; } = new List<TurmaHandle>();
-    }
-
     
 }

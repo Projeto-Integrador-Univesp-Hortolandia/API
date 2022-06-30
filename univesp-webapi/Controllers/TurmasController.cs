@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using univesp_webapi.Data;
+using univesp_webapi.Data.DTO.Turmas;
+using univesp_webapi.Handle;
 using univesp_webapi.Models;
 
 namespace univesp_webapi.Controllers
@@ -15,10 +18,12 @@ namespace univesp_webapi.Controllers
     public class TurmasController : ControllerBase
     {
         private readonly DataBaseContext _context;
+        private readonly IMapper _mapper;
 
-        public TurmasController(DataBaseContext context)
+        public TurmasController(DataBaseContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Turmas
@@ -35,33 +40,25 @@ namespace univesp_webapi.Controllers
 
         // GET: api/Turmas/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Turma>> GetTurma(int id)
+        public async Task<ActionResult<GetTurmaDTO>> GetTurma(int id)
         {
-          if (_context.Turmas == null)
-          {
-              return NotFound();
-          }
-            var turma = await _context.Turmas.FindAsync(id);
-            var alunos = await _context.Alunos.Where(a => a.Turma == id).ToListAsync();
-            var turmas = new Turma()
+            var alunos = await _context.Alunos.Where(a => a.Turma == id).ToListAsync();            
+            var turma = await _context.Turmas.FindAsync(id);            
+            var Turma = _mapper.Map(turma,new GetTurmaDTO());
+            var resultTurma = new GetTurmaDTO
             {
-                Nome = turma.Nome,
-                turma = turma.turma,
-                Periodo = turma.Periodo,
-                Ano = turma.Ano,
-                Sala = turma.Sala,
-                STATUS = turma.STATUS,
-                Alunos = alunos
-            };      
+                Nome = Turma.Nome,
+                turma = Turma.turma,
+                Ano = Turma.Ano,
+                Periodo = Turma.Periodo,
+                Sala = Turma.Sala,
+                ProfessorId = Turma.ProfessorId,
+                STATUS = Turma.STATUS,
+                Alunos = alunos,
+            };            
 
-            if (turmas == null)
-            {
-                return NotFound();
-            }
-
-            return turmas;
+            return resultTurma;
         }
-
         // PUT: api/Turmas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

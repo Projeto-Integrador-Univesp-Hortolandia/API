@@ -12,8 +12,8 @@ using univesp_webapi.Data;
 namespace univesp_webapi.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20220629003809__Models-EstruturaTabelas")]
-    partial class _ModelsEstruturaTabelas
+    [Migration("20220630225216__post")]
+    partial class _post
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -150,7 +150,6 @@ namespace univesp_webapi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Postagem")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProfessorId")
@@ -165,6 +164,12 @@ namespace univesp_webapi.Migrations
                     b.Property<int>("TurmaId")
                         .HasColumnType("int");
 
+                    b.Property<bool?>("hasAlert")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("type")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Posts");
@@ -178,6 +183,9 @@ namespace univesp_webapi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("DataNasc")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -189,6 +197,9 @@ namespace univesp_webapi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Registro")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("STATUS")
                         .HasColumnType("int");
 
@@ -196,8 +207,8 @@ namespace univesp_webapi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TurmaId")
-                        .HasColumnType("int");
+                    b.Property<long>("cpf")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 

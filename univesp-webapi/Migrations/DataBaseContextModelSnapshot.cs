@@ -148,7 +148,6 @@ namespace univesp_webapi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Postagem")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProfessorId")
@@ -162,6 +161,12 @@ namespace univesp_webapi.Migrations
 
                     b.Property<int>("TurmaId")
                         .HasColumnType("int");
+
+                    b.Property<bool?>("hasAlert")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("type")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -191,7 +196,6 @@ namespace univesp_webapi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Registro")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("STATUS")

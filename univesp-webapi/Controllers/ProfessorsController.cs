@@ -41,7 +41,7 @@ namespace univesp_webapi.Controllers
         public async Task<ActionResult<GetprofessoresDTO>> GetProfessor(int id)
         {
             var turma = await _context.Turmas.Where(a => a.ProfessorId == id).ToListAsync();
-            var professor = await _context.Turmas.FindAsync(id);
+            var professor = await _context.Professores.FindAsync(id);
             var Professor = _mapper.Map(professor, new GetprofessoresDTO());
             var resultProfessor = new GetprofessoresDTO
             {

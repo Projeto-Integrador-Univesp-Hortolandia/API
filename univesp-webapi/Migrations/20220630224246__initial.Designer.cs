@@ -12,7 +12,7 @@ using univesp_webapi.Data;
 namespace univesp_webapi.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20220628194823__initial")]
+    [Migration("20220630224246__initial")]
     partial class _initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,15 +51,13 @@ namespace univesp_webapi.Migrations
                     b.Property<int>("STATUS")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TurmaId")
+                    b.Property<int>("Turma")
                         .HasColumnType("int");
 
                     b.Property<long>("cpf")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TurmaId");
 
                     b.ToTable("Alunos");
                 });
@@ -81,19 +79,6 @@ namespace univesp_webapi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Chats");
-                });
-
-            modelBuilder.Entity("univesp_webapi.Models.Feed", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Feeds");
                 });
 
             modelBuilder.Entity("univesp_webapi.Models.Funcionario", b =>
@@ -161,9 +146,6 @@ namespace univesp_webapi.Migrations
                     b.Property<DateTime>("DataPublicacao")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("FeedId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Imagem")
                         .HasColumnType("nvarchar(max)");
 
@@ -177,12 +159,13 @@ namespace univesp_webapi.Migrations
                     b.Property<int>("Reacao")
                         .HasColumnType("int");
 
+                    b.Property<int>("Tag")
+                        .HasColumnType("int");
+
                     b.Property<int>("TurmaId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FeedId");
 
                     b.ToTable("Posts");
                 });
@@ -195,6 +178,9 @@ namespace univesp_webapi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("DataNasc")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -206,12 +192,18 @@ namespace univesp_webapi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Registro")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("STATUS")
                         .HasColumnType("int");
 
                     b.Property<string>("Senha")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("cpf")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -258,16 +250,11 @@ namespace univesp_webapi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("PostId")
-                        .HasColumnType("int");
-
                     b.Property<string>("TagName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PostId");
 
                     b.ToTable("Tags");
                 });
@@ -290,7 +277,7 @@ namespace univesp_webapi.Migrations
                     b.Property<string>("Periodo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProfessorId")
+                    b.Property<int>("ProfessorId")
                         .HasColumnType("int");
 
                     b.Property<int>("STATUS")
@@ -304,73 +291,21 @@ namespace univesp_webapi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProfessorId");
-
                     b.ToTable("Turmas");
-                });
-
-            modelBuilder.Entity("univesp_webapi.Models.Aluno", b =>
-                {
-                    b.HasOne("univesp_webapi.Models.Turma", null)
-                        .WithMany("Alunos")
-                        .HasForeignKey("TurmaId");
                 });
 
             modelBuilder.Entity("univesp_webapi.Models.Mensagem", b =>
                 {
-                    b.HasOne("univesp_webapi.Models.Chat", "Chat")
-                        .WithMany("Mensagens")
+                    b.HasOne("univesp_webapi.Models.Chat", null)
+                        .WithMany("mensagem")
                         .HasForeignKey("ChatId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Chat");
-                });
-
-            modelBuilder.Entity("univesp_webapi.Models.Post", b =>
-                {
-                    b.HasOne("univesp_webapi.Models.Feed", null)
-                        .WithMany("Posts")
-                        .HasForeignKey("FeedId");
-                });
-
-            modelBuilder.Entity("univesp_webapi.Models.Tag", b =>
-                {
-                    b.HasOne("univesp_webapi.Models.Post", null)
-                        .WithMany("Tags")
-                        .HasForeignKey("PostId");
-                });
-
-            modelBuilder.Entity("univesp_webapi.Models.Turma", b =>
-                {
-                    b.HasOne("univesp_webapi.Models.Professor", null)
-                        .WithMany("turma")
-                        .HasForeignKey("ProfessorId");
                 });
 
             modelBuilder.Entity("univesp_webapi.Models.Chat", b =>
                 {
-                    b.Navigation("Mensagens");
-                });
-
-            modelBuilder.Entity("univesp_webapi.Models.Feed", b =>
-                {
-                    b.Navigation("Posts");
-                });
-
-            modelBuilder.Entity("univesp_webapi.Models.Post", b =>
-                {
-                    b.Navigation("Tags");
-                });
-
-            modelBuilder.Entity("univesp_webapi.Models.Professor", b =>
-                {
-                    b.Navigation("turma");
-                });
-
-            modelBuilder.Entity("univesp_webapi.Models.Turma", b =>
-                {
-                    b.Navigation("Alunos");
+                    b.Navigation("mensagem");
                 });
 #pragma warning restore 612, 618
         }

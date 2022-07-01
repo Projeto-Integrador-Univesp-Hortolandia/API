@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using univesp_webapi.Data;
 using univesp_webapi.Models;
 
@@ -18,10 +19,10 @@ namespace univesp_webapi.Controllers
 
 
         [HttpGet("{cpf}")]
-
-        public async Task<ActionResult<Responsavel>> Get(string cpf)
+        
+        public async Task<ActionResult<Responsavel>> Get(int cpf)
         {
-            var responsavel = await _context.Responsavels.FindAsync(cpf);
+            var responsavel = await _context.Responsavels.Where(p => p.cpf == cpf).FirstOrDefaultAsync();
 
             if (responsavel == null)
             {
@@ -31,14 +32,19 @@ namespace univesp_webapi.Controllers
             return responsavel;
         }
 
-        [HttpPost]
+        [HttpPut("{id}")]
 
-        public async Task<ActionResult<Responsavel>> Post(Responsavel responsavel)
+        public async Task<ActionResult<Responsavel>> Put(int id,[FromBody]Responsavel responsavel)
         {
-            _context.Responsavels.Add(responsavel);
+            var usuario = await _context.Responsavels.Where(p => p.Id == id).FirstOrDefaultAsync();
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+            usuario.Senha = responsavel.Senha;
+            _context.Entry(usuario).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("Get", new { id = responsavel.cpf }, responsavel);
+            return usuario;
         }
 
     }

@@ -17,7 +17,7 @@ namespace univesp_webapi.Controllers
         }
 
 
-        [HttpGet("{cpf")]
+        [HttpGet("{cpf}")]
 
         public async Task<ActionResult<Responsavel>> Get(string cpf)
         {

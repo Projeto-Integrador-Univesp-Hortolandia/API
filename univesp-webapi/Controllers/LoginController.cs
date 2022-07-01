@@ -24,27 +24,22 @@ namespace univesp_webapi.Controllers
             var usuario = await _context.Responsavels.Where(r => r.Email == login.Usuario && r.Senha == login.Senha).FirstOrDefaultAsync();
             var prof = await _context.Professores.Where(r => r.Email == login.Usuario && r.Senha == login.Senha).FirstOrDefaultAsync();
             var func = await _context.Funcionarios.Where(r => r.Email == login.Usuario && r.Senha == login.Senha).FirstOrDefaultAsync();
-            if(usuario == null)
+
+            if (usuario != null)
             {
-                if (prof == null)
-                {
-                    if (func == null)
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        return Ok(func);
-                    }
-                }
-                else
-                {
-                    return Ok(prof);
-                }
+                return Ok(usuario);
+            }
+            else if (prof != null)
+            {
+                return Ok(prof);
+            }
+            else if (func != null)
+            {
+                return Ok(func);
             }
             else
             {
-                return Ok(usuario);
+                return NotFound();
             }
         }
     }

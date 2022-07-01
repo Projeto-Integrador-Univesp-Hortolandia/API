@@ -9,6 +9,7 @@ namespace univesp_webapi.Data.DTO.Responsavel
         public string? Observacao { get; set; }
         public string? Foto { get; set; }
         public int STATUS { get; set; }
+        public int IsAdmin { get; set; }
         public List<Aluno> Alunos { get; set; }
     }
 }

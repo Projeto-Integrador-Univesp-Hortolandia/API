@@ -52,6 +52,7 @@ namespace univesp_webapi.Controllers
                 Email = Professor.Email,
                 Foto = Professor.Foto,
                 STATUS = Professor.STATUS,
+                IsAdmin = 1,
                 Turmas = turma,
             };
 

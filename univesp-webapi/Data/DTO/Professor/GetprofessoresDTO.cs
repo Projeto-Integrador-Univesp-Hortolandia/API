@@ -11,6 +11,7 @@ namespace univesp_webapi.Data.DTO.Professores
         public string Senha { get; set; }
         public string? Foto { get; set; }
         public int STATUS { get; set; }
+        public int IsAdmin { get; set; }
         public List<Turma> Turmas { get; set; }
     }
 }

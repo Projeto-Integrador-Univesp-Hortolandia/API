@@ -50,6 +50,8 @@ namespace univesp_webapi.Controllers
                 DataNascimento = Responsavel.DataNascimento,
                 Observacao = responsavel.Observacao,
                 Foto = Responsavel.Foto,
+                STATUS = responsavel.STATUS,
+                IsAdmin = 0,
                 Alunos = alunos
             };
 

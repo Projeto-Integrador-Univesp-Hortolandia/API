@@ -8,5 +8,6 @@
         public string Senha { get; set; }
         public string Foto { get; set; }
         public int STATUS { get; set; }
+        public int IsAdmin { get; set; }
     }
 }

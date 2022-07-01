@@ -99,7 +99,7 @@ namespace univesp_webapi.Controllers
                 Observacoes = aluno.Observacoes,
                 Foto = aluno.Foto,
                 ResponsavelId = aluno.ResponsavelId,
-                STATUS = 1,
+                STATUS = 0,
                 Turma = aluno.Turma,
                 
             };

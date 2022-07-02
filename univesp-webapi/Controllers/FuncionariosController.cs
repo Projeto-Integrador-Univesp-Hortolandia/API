@@ -90,7 +90,16 @@ namespace univesp_webapi.Controllers
           {
               return Problem("Entity set 'DataBaseContext.Funcionarios'  is null.");
           }
-            _context.Funcionarios.Add(funcionario);
+            var func = new Funcionario
+            {
+                Nome = funcionario.Nome,
+                Email = funcionario.Email,
+                Senha = funcionario.Senha,
+                STATUS = funcionario.STATUS,
+                IsAdmin = 1,
+                Foto = funcionario.Foto
+            };
+            _context.Funcionarios.Add(func);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetFuncionario", new { id = funcionario.Id }, funcionario);

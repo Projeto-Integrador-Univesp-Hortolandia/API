@@ -98,7 +98,18 @@ namespace univesp_webapi.Controllers
           {
               return Problem("Entity set 'DataBaseContext.Responsavels'  is null.");
           }
-            _context.Responsavels.Add(responsavel);
+            var resp = new Responsavel
+            {
+                Nome = responsavel.Nome,
+                cpf = responsavel.cpf,
+                DataNascimento = responsavel.DataNascimento,
+                Observacao = responsavel.Observacao,
+                Foto = responsavel.Foto,
+                STATUS = responsavel.STATUS,
+                IsAdmin = 0,
+            };           
+            
+            _context.Responsavels.Add(resp);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetResponsavel", new { id = responsavel.Id }, responsavel);

@@ -106,6 +106,7 @@ namespace univesp_webapi.Controllers
             prof.Senha = professor.Senha;
             prof.Foto = professor.Foto;
             prof.STATUS = professor.STATUS;
+            prof.IsAdmin = 1;
             
 
             _context.Professores.Add(prof);

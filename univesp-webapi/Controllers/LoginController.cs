@@ -19,24 +19,32 @@ namespace univesp_webapi.Controllers
 
         [HttpPost]
 
-        public async Task<ActionResult<ResponsavelsController>> Post([FromBody] Login login)
+        public async Task<ActionResult> Post([FromBody] Login login)
         {
-            var usuario = await _context.Responsavels.Where(r => r.Email == login.Usuario && r.Senha == login.Senha).FirstOrDefaultAsync();
-            var prof = await _context.Professores.Where(r => r.Email == login.Usuario && r.Senha == login.Senha).FirstOrDefaultAsync();
-            var func = await _context.Funcionarios.Where(r => r.Email == login.Usuario && r.Senha == login.Senha).FirstOrDefaultAsync();
-
-            if(usuario == null)
+            var usuario = await _context.Responsavels.Where(p => p.Email == login.Usuario & p.Senha == login.Senha).FirstOrDefaultAsync();
+            var prof = await _context.Professores.Where(p => p.Email == login.Usuario & p.Senha == login.Senha).FirstOrDefaultAsync();
+            var func = await _context.Funcionarios.Where(p => p.Email == login.Usuario & p.Senha == login.Senha).FirstOrDefaultAsync();
+            if (usuario == null)
             {
                 if(prof == null)
                 {
                     if(func == null)
                     {
+                        return NotFound();
+                    }
+                    else
+                    {
                         return Ok(func);
                     }
                 }
-                return Ok(prof);
-            }
+                else
+                {
+                    return Ok(prof);
+                }
+            }            
             return Ok(usuario);
+
         }
+            
     }
 }

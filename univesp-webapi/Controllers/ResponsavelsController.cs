@@ -102,6 +102,8 @@ namespace univesp_webapi.Controllers
             {
                 Nome = responsavel.Nome,
                 cpf = responsavel.cpf,
+                Email = responsavel.Email,
+                Senha = responsavel.Senha,
                 DataNascimento = responsavel.DataNascimento,
                 Observacao = responsavel.Observacao,
                 Foto = responsavel.Foto,

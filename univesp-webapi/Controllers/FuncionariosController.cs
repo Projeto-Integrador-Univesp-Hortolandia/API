@@ -102,7 +102,7 @@ namespace univesp_webapi.Controllers
             _context.Funcionarios.Add(func);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetFuncionario", new { id = funcionario.Id }, funcionario);
+            return CreatedAtAction("GetFuncionario", new { id = funcionario.Id }, func);
         }
 
         // DELETE: api/Funcionarios/5

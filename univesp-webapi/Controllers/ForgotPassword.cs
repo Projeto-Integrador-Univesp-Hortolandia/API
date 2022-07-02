@@ -20,7 +20,7 @@ namespace univesp_webapi.Controllers
 
         [HttpGet("{cpf}")]
         
-        public async Task<ActionResult<Responsavel>> Get(int cpf)
+        public async Task<ActionResult<Responsavel>> Get(long cpf)
         {
             var responsavel = await _context.Responsavels.Where(p => p.cpf == cpf).FirstOrDefaultAsync();
 

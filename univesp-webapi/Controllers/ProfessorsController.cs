@@ -103,6 +103,7 @@ namespace univesp_webapi.Controllers
             var prof = new Professor();
             prof.Nome = professor.Nome;
             prof.Email = professor.Email;
+            prof.cpf = professor.cpf;
             prof.Senha = professor.Senha;
             prof.Foto = professor.Foto;
             prof.STATUS = professor.STATUS;
